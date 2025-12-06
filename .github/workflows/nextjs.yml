@@ -19,75 +19,57 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # ✅ 自动检测包管理器
+      # ✅ 先检测包管理器（此时不会执行 pnpm）
       - name: Detect package manager
-        id: detect-package-manager
+        id: pm
         run: |
-          if [ -f "pnpm-lock.yaml" ]; then
+          if [ -f pnpm-lock.yaml ]; then
             echo "manager=pnpm" >> $GITHUB_OUTPUT
-            echo "install=pnpm install --frozen-lockfile" >> $GITHUB_OUTPUT
-            echo "run=pnpm" >> $GITHUB_OUTPUT
-          elif [ -f "yarn.lock" ]; then
+          elif [ -f yarn.lock ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "install=yarn install --frozen-lockfile" >> $GITHUB_OUTPUT
-            echo "run=yarn" >> $GITHUB_OUTPUT
-          elif [ -f "package-lock.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "install=npm ci" >> $GITHUB_OUTPUT
-            echo "run=npx --no-install" >> $GITHUB_OUTPUT
           else
-            echo "❌ No lockfile found"
-            exit 1
+            echo "manager=npm" >> $GITHUB_OUTPUT
           fi
 
-      # ✅ 安装 Node
+      # ✅ 安装 Node（这里不能用 cache: pnpm，否则会先找 pnpm）
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          node-version: 20
 
-      # ✅ 仅在使用 pnpm 时安装 pnpm
+      # ✅ 只有当使用 pnpm 时才安装 pnpm（关键修复点）
       - name: Setup pnpm
-        if: steps.detect-package-manager.outputs.manager == 'pnpm'
+        if: steps.pm.outputs.manager == 'pnpm'
         uses: pnpm/action-setup@v3
         with:
           version: 8
+          run_install: false
 
-      # ✅ 配置 GitHub Pages 专用 Next.js 输出
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: next
-
-      # ✅ Next.js 构建缓存
-      - name: Restore Next cache
-        uses: actions/cache@v4
-        with:
-          path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml', '**/yarn.lock', '**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-
-
-      # ✅ 安装依赖
+      # ✅ 现在才可以安全使用 pnpm / yarn / npm
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.install }}
-
-      # ✅ 构建 + 导出静态站点
-      - name: Build Next.js
-        env:
-          NEXT_PUBLIC_GITHUB_OWNER: ${{ secrets.NEXT_PUBLIC_GITHUB_OWNER }}
-          NEXT_PUBLIC_GITHUB_REPO: ${{ secrets.NEXT_PUBLIC_GITHUB_REPO }}
-          NEXT_PUBLIC_GITHUB_BRANCH: ${{ secrets.NEXT_PUBLIC_GITHUB_BRANCH }}
-          NEXT_PUBLIC_GITHUB_APP_ID: ${{ secrets.NEXT_PUBLIC_GITHUB_APP_ID }}
         run: |
-          ${{ steps.detect-package-manager.outputs.run }} next build
-          ${{ steps.detect-package-manager.outputs.run }} next export
+          if [ "${{ steps.pm.outputs.manager }}" = "pnpm" ]; then
+            pnpm install --frozen-lockfile
+          elif [ "${{ steps.pm.outputs.manager }}" = "yarn" ]; then
+            yarn install --frozen-lockfile
+          else
+            npm ci
+          fi
 
-      # ✅ 上传 out 目录
+      # ✅ 构建
+      - name: Build
+        run: |
+          if [ "${{ steps.pm.outputs.manager }}" = "pnpm" ]; then
+            pnpm build
+          elif [ "${{ steps.pm.outputs.manager }}" = "yarn" ]; then
+            yarn build
+          else
+            npm run build
+          fi
+
+      # ✅ 上传 out（Next 必须是 output: export）
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
