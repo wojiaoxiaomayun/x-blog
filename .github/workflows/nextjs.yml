@@ -1,4 +1,4 @@
-name: Deploy Next.js site to Pages
+name: Deploy Next.js site to Pages (NPM Only)
 
 on:
   push:
@@ -19,57 +19,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # ✅ 先检测包管理器（此时不会执行 pnpm）
-      - name: Detect package manager
-        id: pm
-        run: |
-          if [ -f pnpm-lock.yaml ]; then
-            echo "manager=pnpm" >> $GITHUB_OUTPUT
-          elif [ -f yarn.lock ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-          else
-            echo "manager=npm" >> $GITHUB_OUTPUT
-          fi
-
-      # ✅ 安装 Node（这里不能用 cache: pnpm，否则会先找 pnpm）
+      # ✅ 安装 Node（不再使用 pnpm / yarn）
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # ✅ 只有当使用 pnpm 时才安装 pnpm（关键修复点）
-      - name: Setup pnpm
-        if: steps.pm.outputs.manager == 'pnpm'
-        uses: pnpm/action-setup@v3
-        with:
-          version: 7.18.1
-          run_install: false
-
-      # ✅ 现在才可以安全使用 pnpm / yarn / npm
+      # ✅ 直接 npm 安装（不走锁文件，不 ci）
       - name: Install dependencies
-        run: |
-          if [ "${{ steps.pm.outputs.manager }}" = "pnpm" ]; then
-            pnpm install --frozen-lockfile
-          elif [ "${{ steps.pm.outputs.manager }}" = "yarn" ]; then
-            yarn install --frozen-lockfile
-          else
-            npm ci
-          fi
+        run: npm install
 
       # ✅ 构建
-      - name: Build
-        run: |
-          if [ "${{ steps.pm.outputs.manager }}" = "pnpm" ]; then
-            pnpm build
-          elif [ "${{ steps.pm.outputs.manager }}" = "yarn" ]; then
-            yarn build
-          else
-            npm run build
-          fi
+      - name: Build Next.js
+        env:
+          NEXT_PUBLIC_GITHUB_OWNER: ${{ secrets.NEXT_PUBLIC_GITHUB_OWNER }}
+          NEXT_PUBLIC_GITHUB_REPO: ${{ secrets.NEXT_PUBLIC_GITHUB_REPO }}
+          NEXT_PUBLIC_GITHUB_BRANCH: ${{ secrets.NEXT_PUBLIC_GITHUB_BRANCH }}
+          NEXT_PUBLIC_GITHUB_APP_ID: ${{ secrets.NEXT_PUBLIC_GITHUB_APP_ID }}
+        run: npm run build
 
-      # ✅ 上传 out（Next 必须是 output: export）
+      # ✅ 上传 out 目录（要求 next.config.js: output: 'export'）
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
