@@ -8,6 +8,7 @@ import { WriteEditor } from '../components/editor'
 import { WriteSidebar } from '../components/sidebar'
 import { WriteActions } from '../components/actions'
 import { WritePreview } from '../components/preview'
+export const runtime = 'edge'
 
 export default function EditBlogPage() {
 	const params = useParams() as { slug?: string }
