@@ -44,7 +44,7 @@ jobs:
         if: steps.pm.outputs.manager == 'pnpm'
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 7.18.1
           run_install: false
 
       # ✅ 现在才可以安全使用 pnpm / yarn / npm
