@@ -93,7 +93,6 @@ const serializeItem = (item: BlogIndexItem): string => {
 			${enclosure ?? ''}
 		</item>`.trim()
 }
-export const runtime = 'edge';
 export const dynamic = 'force-static'
 export const revalidate = false
 
