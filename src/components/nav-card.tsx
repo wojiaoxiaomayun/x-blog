@@ -38,12 +38,6 @@ const list = [
 		href: '/projects'
 	},
 	{
-		icon: AboutOutlineSVG,
-		iconActive: AboutFilledSVG,
-		label: '关于网站',
-		href: '/about'
-	},
-	{
 		icon: ShareOutlineSVG,
 		iconActive: ShareFilledSVG,
 		label: '推荐分享',
@@ -54,6 +48,12 @@ const list = [
 		iconActive: WebsiteFilledSVG,
 		label: '优秀博客',
 		href: '/bloggers'
+	},
+	{
+		icon: AboutOutlineSVG,
+		iconActive: AboutFilledSVG,
+		label: '关于网站',
+		href: '/about'
 	}
 ]
 
