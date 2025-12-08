@@ -242,5 +242,15 @@
 			"AI"
 		],
 		"stars": 5
+	},
+	{
+		"name": "Vercel AI",
+		"logo": "https://vercel.com/favicon.ico",
+		"url": "https://ai-sdk.dev/docs/introduction",
+		"description": "每月5$免费额度，任意模型",
+		"tags": [
+			"AI"
+		],
+		"stars": 3
 	}
 ]
