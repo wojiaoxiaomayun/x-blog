@@ -222,5 +222,15 @@
 			"图片"
 		],
 		"stars": 3
+	},
+	{
+		"name": "Cerebras",
+		"logo": "https://cloud.cerebras.ai/images/logo/cerebras-logo-black.svg",
+		"url": "https://cloud.cerebras.ai/",
+		"description": "免费ai调用，有速率限制，需要科学上网",
+		"tags": [
+			"AI"
+		],
+		"stars": 3
 	}
 ]
