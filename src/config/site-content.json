@@ -58,5 +58,5 @@
 	],
 	"clockShowSeconds": false,
 	"summaryInContent": false,
-	"isCachePem": false
+	"isCachePem": true
 }

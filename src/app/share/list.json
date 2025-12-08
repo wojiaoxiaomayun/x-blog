@@ -222,5 +222,35 @@
 			"图片"
 		],
 		"stars": 3
+	},
+	{
+		"name": "Cerebras",
+		"logo": "https://cloud.cerebras.ai/images/logo/cerebras-logo-black.svg",
+		"url": "https://cloud.cerebras.ai/",
+		"description": "免费ai调用，有速率限制，需要科学上网",
+		"tags": [
+			"AI"
+		],
+		"stars": 3
+	},
+	{
+		"name": "Models.dev",
+		"logo": "https://models.dev/favicon-aq6crjze.svg",
+		"url": "https://models.dev/",
+		"description": "模型集合，可以看模型情况，json里面可以找到免费api调用哦",
+		"tags": [
+			"AI"
+		],
+		"stars": 5
+	},
+	{
+		"name": "Vercel AI",
+		"logo": "https://vercel.com/favicon.ico",
+		"url": "https://ai-sdk.dev/docs/introduction",
+		"description": "每月5$免费额度，任意模型",
+		"tags": [
+			"AI"
+		],
+		"stars": 3
 	}
 ]
