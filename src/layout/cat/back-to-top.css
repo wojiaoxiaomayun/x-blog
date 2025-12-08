@@ -1,4 +1,4 @@
-@media (max-width:1000px) {
+@media (max-width:1550px) {
     .cat-back-to-top {
         display: none !important;
     }
@@ -1151,7 +1151,7 @@
     z-index: 999;
     width: 70px;
     height: 900px;
-    background: url(https://blog-static.cnblogs.com/files/fsh001/scroll.gif);
+    background: url(./scroll.gif);
     transition: all .5s ease-in-out;
     opacity: 1;
 }
