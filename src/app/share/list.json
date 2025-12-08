@@ -232,5 +232,15 @@
 			"AI"
 		],
 		"stars": 3
+	},
+	{
+		"name": "Models.dev",
+		"logo": "https://models.dev/favicon-aq6crjze.svg",
+		"url": "https://models.dev/",
+		"description": "模型集合，可以看模型情况，json里面可以找到免费api调用哦",
+		"tags": [
+			"AI"
+		],
+		"stars": 5
 	}
 ]
