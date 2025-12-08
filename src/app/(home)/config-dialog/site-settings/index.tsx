@@ -1,14 +1,14 @@
 'use client'
 
 import type { SiteContent } from '../../stores/config-store'
-import type { ArtImageUploads, BackgroundImageUploads, FileItem } from './types'
+import type { ArtImageUploads, BackgroundImageUploads, FileItem, SocialButtonImageUploads } from './types'
 import { FaviconAvatarUpload } from './favicon-avatar-upload'
 import { SiteMetaForm } from './site-meta-form'
 import { ArtImagesSection } from './art-images-section'
 import { BackgroundImagesSection } from './background-images-section'
 import { SocialButtonsSection } from './social-buttons-section'
 
-export type { FileItem, ArtImageUploads, BackgroundImageUploads } from './types'
+export type { FileItem, ArtImageUploads, BackgroundImageUploads, SocialButtonImageUploads } from './types'
 
 interface SiteSettingsProps {
 	formData: SiteContent
@@ -21,6 +21,8 @@ interface SiteSettingsProps {
 	setArtImageUploads: React.Dispatch<React.SetStateAction<ArtImageUploads>>
 	backgroundImageUploads: BackgroundImageUploads
 	setBackgroundImageUploads: React.Dispatch<React.SetStateAction<BackgroundImageUploads>>
+	socialButtonImageUploads: SocialButtonImageUploads
+	setSocialButtonImageUploads: React.Dispatch<React.SetStateAction<SocialButtonImageUploads>>
 }
 
 export function SiteSettings({
@@ -33,7 +35,9 @@ export function SiteSettings({
 	artImageUploads,
 	setArtImageUploads,
 	backgroundImageUploads,
-	setBackgroundImageUploads
+	setBackgroundImageUploads,
+	socialButtonImageUploads,
+	setSocialButtonImageUploads
 }: SiteSettingsProps) {
 	return (
 		<div className='space-y-6'>
@@ -41,7 +45,12 @@ export function SiteSettings({
 
 			<SiteMetaForm formData={formData} setFormData={setFormData} />
 
-			<SocialButtonsSection formData={formData} setFormData={setFormData} />
+			<SocialButtonsSection
+				formData={formData}
+				setFormData={setFormData}
+				socialButtonImageUploads={socialButtonImageUploads}
+				setSocialButtonImageUploads={setSocialButtonImageUploads}
+			/>
 
 			<ArtImagesSection formData={formData} setFormData={setFormData} artImageUploads={artImageUploads} setArtImageUploads={setArtImageUploads} />
 
@@ -76,13 +85,24 @@ export function SiteSettings({
 				<label className='flex items-center gap-2'>
 					<input
 						type='checkbox'
-						checked={formData.isCachePem ?? false}
-						onChange={e => setFormData({ ...formData, isCachePem: e.target.checked })}
+						checked={formData.hideEditButton ?? false}
+						onChange={e => setFormData({ ...formData, hideEditButton: e.target.checked })}
 						className='accent-brand h-4 w-4 rounded'
 					/>
-					<span className='text-sm font-medium'>缓存PEM(已加密，但存在风险)</span>
+					<span className='text-sm font-medium'>隐藏编辑按钮（页面编辑快捷键 ctrl/cmd + ,）</span>
 				</label>
 			</div>
+			<div className='flex gap-3'>
+                <label className='flex items-center gap-2'>
+                    <input
+                        type='checkbox'
+                        checked={formData.isCachePem ?? false}
+                        onChange={e => setFormData({ ...formData, isCachePem: e.target.checked })}
+                        className='accent-brand h-4 w-4 rounded'
+                    />
+                    <span className='text-sm font-medium'>缓存PEM(已加密，但存在风险)</span>
+                </label>
+            </div>
 		</div>
 	)
 }
