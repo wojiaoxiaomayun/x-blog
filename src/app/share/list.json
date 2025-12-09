@@ -252,5 +252,15 @@
 			"AI"
 		],
 		"stars": 3
+	},
+	{
+		"name": "开源替代",
+		"logo": "https://openalternative.co/cdn-cgi/image/width=64,quality=75,format=avif,metadata=none/favicon.png",
+		"url": "https://openalternative.co/",
+		"description": "付费软件的开源替代集合站",
+		"tags": [
+			"工具"
+		],
+		"stars": 4
 	}
 ]
