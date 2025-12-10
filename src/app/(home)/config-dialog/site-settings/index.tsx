@@ -7,6 +7,7 @@ import { SiteMetaForm } from './site-meta-form'
 import { ArtImagesSection } from './art-images-section'
 import { BackgroundImagesSection } from './background-images-section'
 import { SocialButtonsSection } from './social-buttons-section'
+import { HatSection } from './hat-section'
 
 export type { FileItem, ArtImageUploads, BackgroundImageUploads, SocialButtonImageUploads } from './types'
 
@@ -93,6 +94,7 @@ export function SiteSettings({
 				</label>
 			</div>
 			<div className='flex gap-3'>
+<<<<<<< HEAD
                 <label className='flex items-center gap-2'>
                     <input
                         type='checkbox'
@@ -103,6 +105,20 @@ export function SiteSettings({
                     <span className='text-sm font-medium'>缓存PEM(已加密，但存在风险)</span>
                 </label>
             </div>
+=======
+				<label className='flex items-center gap-2'>
+					<input
+						type='checkbox'
+						checked={formData.isCachePem ?? false}
+						onChange={e => setFormData({ ...formData, isCachePem: e.target.checked })}
+						className='accent-brand h-4 w-4 rounded'
+					/>
+					<span className='text-sm font-medium'>缓存PEM(已加密，但存在风险)</span>
+				</label>
+			</div>
+
+			<HatSection formData={formData} setFormData={setFormData} />
+>>>>>>> dev
 		</div>
 	)
 }
