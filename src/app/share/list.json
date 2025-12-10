@@ -224,7 +224,6 @@
 		"stars": 3
 	},
 	{
-<<<<<<< HEAD
 		"name": "Cerebras",
 		"logo": "https://cloud.cerebras.ai/images/logo/cerebras-logo-black.svg",
 		"url": "https://cloud.cerebras.ai/",
@@ -263,15 +262,5 @@
 			"工具"
 		],
 		"stars": 4
-=======
-		"name": "WoraWork",
-		"logo": "https://worawork.vercel.app/Icons/worawork.webp",
-		"url": "https://worawork.vercel.app/",
-		"description": "方格世界的 Web3D，场景渲染非常棒，非常值得体验",
-		"tags": [
-			"3D"
-		],
-		"stars": 3
->>>>>>> dev
 	}
 ]
