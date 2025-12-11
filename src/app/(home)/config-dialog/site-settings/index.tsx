@@ -104,6 +104,8 @@ export function SiteSettings({
                     <span className='text-sm font-medium'>缓存PEM(已加密，但存在风险)</span>
                 </label>
             </div>
+
+			<HatSection formData={formData} setFormData={setFormData} />
 		</div>
 	)
 }
