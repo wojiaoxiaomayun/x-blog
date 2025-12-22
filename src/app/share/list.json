@@ -262,5 +262,15 @@
 			"工具"
 		],
 		"stars": 4
+	},
+	{
+		"name": "心流平台",
+		"logo": "https://img.alicdn.com/imgextra/i1/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32.svg",
+		"url": "https://platform.iflow.cn/",
+		"description": "免费多大模型接口",
+		"tags": [
+			"AI"
+		],
+		"stars": 3
 	}
 ]
